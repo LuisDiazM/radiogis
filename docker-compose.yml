@@ -1,0 +1,27 @@
+version: '2.2'
+
+services:
+
+    database:
+        image: postgres:12.3-alpine
+        restart: always
+        environment:
+            POSTGRES_PASSWORD: database.radio@2019
+            POSTGRES_DB: radiogis
+        ports:
+            - 5432:5432
+        
+    radioastronomy-backend:
+        build: .
+        depends_on:
+            - database
+        restart: always
+        environment:
+            ENV POSTGRES_DB: radiogis
+            ENV DATABASE_HOST: database
+            ENV DATABASE_USER: postgres
+            ENV POSTGRES_PASSWORD: database.radio@2019
+            ENV DATABASE_PORT: 5432
+        ports:
+          - 8000:8000
+        command: ./main.sh
