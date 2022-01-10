@@ -6,6 +6,8 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 COPY . .
 RUN chmod 777 main.sh
-RUN cd plataforma && pip install -r requirements.txt
+RUN pip install --upgrade pip
+RUN pip install gunicorn
+RUN pip install -r requirements.txt
 
 
