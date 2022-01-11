@@ -5,18 +5,23 @@ services:
     database:
         image: postgres:12.3-alpine
         restart: always
-        environment:
-            POSTGRES_PASSWORD: database.radio@2019
-            POSTGRES_DB: radiogis
+        env_file: plataforma/.env
         ports:
             - 5432:5432
         
     radioastronomy-backend:
         build: plataforma/.
+        restart: always
         env_file: plataforma/.env
         depends_on:
             - database  
-        restart: always
         ports:
             - 8000:8000
         command: ./main.sh
+
+    broker:
+        build: broker/.
+        restart: always
+        ports: 
+            - 1883:1883
+            - 9001:9001
