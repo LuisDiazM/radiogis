@@ -3,18 +3,16 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 import json
 import numpy
-import time, datetime
+import datetime
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import mpld3
-import logging
 from .models import AlbumImagenes, Espectro, Estado, CaracteristicasAntena, \
                     CaracteristicasEstacion, RBW, CaracteristicasEspectro, RegionCampana, \
                         PosicionAntena, Servicios, Bandas, EstacionAmbiental, Estadocamara, Estadoestacion, EstadoPosicionAntena, \
                     AlbumVideosPhantom
-from .forms import EspectroForm, RFIForm, RegionForm
-from django.core import serializers
+from .forms import RFIForm, RegionForm
 from django.urls import reverse_lazy
 from django.shortcuts import render, redirect
 from django.http import JsonResponse, HttpResponseRedirect
@@ -24,7 +22,7 @@ from django.db import connection
 from django.core.serializers.json import DjangoJSONEncoder
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
-
+import os
 
 def smooth(x,window_len=11,window='hanning'):
     """smooth the data using a window with requested size.
@@ -86,11 +84,10 @@ def smooth(x,window_len=11,window='hanning'):
 def publishMQTT(topico, msg):
     """ Se encarga de establecer comunicacion
     MQTT con los dispositivos """
-    IP_broker = "127.0.0.1"
-    usuario_broker = "pi"
-    password_broker = "raspberry"
-    # time.sleep(60)
-    publish.single(topico, msg, port=1883, hostname=IP_broker,
+    IP_broker = os.getenv('BROKER_HOST')
+    usuario_broker = os.getenv('BROKER_USER')
+    password_broker = os.getenv('BROKER_PASSWORD')
+    publish.single(topico, msg, port=os.getenv('BROKER_PORT'), hostname=IP_broker,
      auth={"username": usuario_broker, "password":password_broker})
 
 def promedio(espectro, nfft):
