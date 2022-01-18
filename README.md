@@ -38,3 +38,8 @@ Verificar la instalación:
 Una vez instalado docker y docker-compose, para correr la plataforma se requiere ejecutar el siguiente comando:
 
 ``docker-compose up`` y esperar unos 3 min ya que hay unos scripts de configuración que tienen retardos, una vez pasados los tres minutos puede abrir el navegador y entrar a [enlace](http://localhost:8000).
+
+Para ingresar a la plataforma se crearon las siguientes credenciales de prueba:
+
+- username: mario
+- password: mario
