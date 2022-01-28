@@ -1,54 +1,91 @@
-<div class="frequency">
-  <label for="vertical">Frecuencia central Hz</label>
-  <p-inputNumber
-    [(ngModel)]="frequency"
-    [showButtons]="true"
-    buttonLayout="vertical"
-    spinnerMode="vertical"
-    inputId="vertical"
-    decrementButtonClass="p-button-primary"
-    incrementButtonClass="p-button-primary"
-    incrementButtonIcon="pi pi-plus"
-    decrementButtonIcon="pi pi-minus"
-    [step]="1e6"
-  >
-  </p-inputNumber>
-</div>
+<h1>Capturar datos frecuencia única</h1>
+<div class="container">
+  <div class="radio-sdr">
+    <p-card
+      header="Radio"
+      subheader="Parámetros del SDR"
+      [style]="{ width: '400px' }"
+      styleClass="p-card-shadow"
+    >
+      <ng-template pTemplate="header">
+        <img alt="Card" src="assets/images/LimeSDR.jpeg" />
+      </ng-template>
+      <div>
+        <label for="vertical">Frecuencia central {{frequency |number}} MHz</label>
+        <p-slider [min]="50" [max]="250" [(ngModel)]="frequency"></p-slider>
 
-<div class="elevation">
-  <h4 class="mt-3">Elevación (grados)</h4>
-  <p-knob [(ngModel)]="elevation" [step]="5" [max]="MAX_ELEVATION"></p-knob>
-</div>
 
-<div class="azimut">
-  <h4 class="mt-3">Azimut (grados)</h4>
-  <p-knob [(ngModel)]="azimut" [step]="5" [max]="MAX_AZIMUT"></p-knob>
-</div>
+        <h4>Ancho de banda {{ BWFreq?.sampleFrequency | number }} (Hz)</h4>
+        <p-dropdown
+          [options]="frequencySample"
+          [(ngModel)]="BWFreq"
+          placeholder="Seleccione Ancho de banda"
+          optionLabel="sampleFrequency"
+          [showClear]="true"
+        ></p-dropdown>
 
-<div class="bw">
-  <h4>Ancho de banda {{ bw | number }} (Hz)</h4>
-  <p-slider [max]="MAX_BW" [(ngModel)]="bw" [step]="500e3"></p-slider>
-</div>
+        <h4>Tamaño FFT {{ fftSize?.fft }}</h4>
+        <p-dropdown
+          [options]="nfft"
+          [(ngModel)]="fftSize"
+          placeholder="Seleccione FFT"
+          optionLabel="fft"
+          [showClear]="true"
+        ></p-dropdown>
+      </div>
+    </p-card>
+  </div>
 
-<div class="fft">
-  <h4>Tamaño FFT</h4>
-  <p-dropdown
-    [options]="nfft"
-    [(ngModel)]="fftSize"
-    placeholder="Seleccione FFT"
-    optionLabel="fft"
-    [showClear]="true"
-  ></p-dropdown>
-</div>
+  <div class="position-antena">
+    <p-card
+      header="Posicionamiento de antena"
+      subheader="Parámetros del rotor"
+      [style]="{ width: '400px' }"
+      styleClass="p-card-shadow"
+    >
+      <ng-template pTemplate="header">
+        <img alt="Card" src="assets/images/Yaesu.jpeg" />
+      </ng-template>
 
-<div>
-  <h4>Tiempo de sensado (seg)</h4>
-  <i class="pi pi-clock" style="font-size: 2rem"></i>
-  <p-inputNumber
-    [(ngModel)]="timer"
-    mode="decimal"
-    [min]="1"
-    [max]="300"
-    [showButtons]="true"
-  ></p-inputNumber>
+      <div>
+        <h4 class="mt-3">Elevación (grados)</h4>
+        <p-knob
+          [(ngModel)]="elevation"
+          [step]="5"
+          [max]="MAX_ELEVATION"
+        ></p-knob>
+      </div>
+
+      <div>
+        <h4 class="mt-3">Azimut {{ azimut }} (grados)</h4>
+        <p-slider [(ngModel)]="azimut" [step]="5" [max]="MAX_AZIMUT"></p-slider>
+      </div>
+    </p-card>
+  </div>
+
+  <div class="timmer">
+    <h4>Tiempo de sensado (seg)</h4>
+    <div class="timmer-elements">
+      <i class="pi pi-clock" style="font-size: 2rem"></i>
+      <p-inputNumber
+        [(ngModel)]="timer"
+        mode="decimal"
+        [min]="1"
+        [max]="300"
+        [showButtons]="true"
+      ></p-inputNumber>
+    </div>
+
+    <p-confirmDialog
+      header="Confirmation"
+      icon="pi pi-exclamation-triangle"
+    ></p-confirmDialog>
+
+    <button
+      (click)="confirm()"
+      pButton
+      icon="pi pi-check"
+      label="Confirmar"
+    ></button>
+  </div>
 </div>

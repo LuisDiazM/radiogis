@@ -1,0 +1,42 @@
+label {
+    display: block;
+    font-size: 1.5em;
+    margin-top: 1%;
+    margin-bottom: 1%;
+  }
+  
+  .radio-sdr {
+    margin-left: 3%;
+    margin-top: 3%;
+  }
+  
+  .position-antena {
+    margin-left: 3%;
+    margin-top: 3%;
+  }
+  
+  .timmer{
+      margin-left: 3%;
+      margin-top: 3%;
+  
+  }
+  
+  .timmer>button{
+      margin-top: 5%;
+  }
+  
+  .timmer-elements{
+  display: flex;
+  }
+  
+  .timmer-elements>i{
+      margin-right: 3%;
+  }
+  
+  .container {
+    display: flex;
+  }
+  
+  h1{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  }
