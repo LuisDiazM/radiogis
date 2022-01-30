@@ -9,18 +9,14 @@ import { BWFrequencies, FFTModel } from '../../models/captureData.model';
 })
 export class SweepFrequencyComponent implements OnInit {
 
-  MAX_ELEVATION: number = 180;
   MAX_BW: number = 20e6;
-  MAX_AZIMUT: number = 360;
   nfft!: FFTModel[];
   frequencySample!: BWFrequencies[];
   fftSize: FFTModel = { fft: 1024 };
 
-  frequency: number[] = [100, 200];
+  frequency: number[] = [100, 200]; //MHz
   BWFreq: BWFrequencies = { sampleFrequency: 16e6 }; //Hz
-  azimut: number = 0;
-  elevation: number = 0;
-  bw: number = 1e6;
+  bw: number = 1e6; //Hz
   timer: number = 1;
 
   constructor(private confirmationService: ConfirmationService) {}
@@ -41,7 +37,7 @@ export class SweepFrequencyComponent implements OnInit {
   confirm() {
     this.confirmationService.confirm({
       message: `(BW ${this.BWFreq?.sampleFrequency}), (Frecuencia central ${this.frequency}) \n
-      (FFT ${this.fftSize?.fft}) (azimut ${this.azimut}) (elevacion ${this.elevation})`,
+      (FFT ${this.fftSize?.fft})`,
       header: '¿Está seguro tomar datos con los siguientes parámetros?',
       acceptLabel: "Si",
       rejectLabel: "No",
